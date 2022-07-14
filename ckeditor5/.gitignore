@@ -1,0 +1,17 @@
+node_modules/
+coverage/
+packages/*/node_modules/
+docs/api/output.json
+external/
+lerna-debug.log
+.idea
+.vscode
+
+# Ignore `yarn.lock` - this file might contain info from external repositories.
+yarn.lock
+
+# Ignore `mrgit.json` this file contains info about external repositories.
+mrgit.json
+
+build/
+!packages/ckeditor5-build-*/build

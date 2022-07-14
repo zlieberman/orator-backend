@@ -1,0 +1,7 @@
+speechrecognition
+pyaudio
+django
+django-cors-headers
+django-webpack-loader
+djangorestframework
+pygments
