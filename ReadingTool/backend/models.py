@@ -38,6 +38,7 @@ class UserAssignment(models.Model):
     grade = models.FloatField(default=0)
     date_completed = models.DateTimeField(blank=True, null=True)
     word_index = models.IntegerField(default=0)
+    late_exemption_granted = models.BooleanField(default=False)
 
 
 class MissedWord(models.Model):
