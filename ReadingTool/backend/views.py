@@ -14,6 +14,9 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
+    search_fields = ['title', 'description']
+    filter_backends = (filters.SearchFilter,)
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
