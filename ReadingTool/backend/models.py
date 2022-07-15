@@ -45,6 +45,7 @@ class MissedWord(models.Model):
     word = models.CharField(max_length=20)
     user_assignment_id = models.ForeignKey(UserAssignment, on_delete=models.CASCADE)
     word_index = models.IntegerField()
+    known = models.BooleanField()
 
 
 
