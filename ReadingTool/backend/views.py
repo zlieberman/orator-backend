@@ -33,7 +33,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)  
 
     @action(detail='False')
-    def missed_words_list(self, request, pk):
+    def missed_word_list(self, request, pk):
         user = User.objects.get(id=pk)
         student_profile_qs = user.studentprofile_set.all()
         missed_word_qs = []
@@ -76,7 +76,19 @@ class ClassroomViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)   
 
     @action(detail='False')
-    def missed_words_list(self, request, pk):
+    def user_assignment_list(self, request, pk):
+        classroom = Classroom.objects.get(id=pk)
+        assignment_qs = classroom.assignment_set.all()
+        # now from the assignments get the UserAssignments
+        userassignment_qs = []
+        for assignment in assignment_qs:
+            userassignment_qs += assignment.userassignment_set.all()
+
+        serializer = UserAssignmentSerializer(userassignment_qs, many=True)
+        return Response(serializer.data)
+
+    @action(detail='False')
+    def missed_word_list(self, request, pk):
         classroom = Classroom.objects.get(id=pk)
         # first get all Assignments
         assignment_qs = classroom.assignment_set.all()
@@ -104,7 +116,7 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     @action(detail='False')
-    def missed_words_list(self, request, pk):
+    def missed_word_list(self, request, pk):
         assignment = Assignment.objects.get(id=pk)
         userassignment_qs = assignment.userassignment_set.all()
         missedword_qs = []
