@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Assignment, Book, Classroom, MissedWord, UserAssignment
+from .models import Assignment, Book, Classroom, MissedWord, StudentProfile, UserAssignment
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import Token
 
@@ -49,4 +49,10 @@ class UserAssignmentSerializer(serializers.ModelSerializer):
 class MissedWordSerializer(serializers.ModelSerializer):
     class Meta:
         model = MissedWord
+        fields = '__all__'
+
+
+class StudentProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentProfile
         fields = '__all__'

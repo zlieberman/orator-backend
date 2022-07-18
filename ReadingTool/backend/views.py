@@ -1,6 +1,6 @@
 from re import M
-from .models import Assignment, Book, Classroom, MissedWord, UserAssignment
-from .serializers import AssignmentSerializer, BookSerializer, MissedWordSerializer, UserAssignmentSerializer, UserSerializer, ClassroomSerializer
+from .models import Assignment, Book, Classroom, MissedWord, StudentProfile, UserAssignment
+from .serializers import AssignmentSerializer, BookSerializer, MissedWordSerializer, StudentProfileSerializer, UserAssignmentSerializer, UserSerializer, ClassroomSerializer
 from rest_framework import viewsets, filters
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -26,17 +26,23 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
     @action(detail='False')
-    def user_assignment_list(self, request, pk):
+    def student_profile_list(self, request, pk):
         user = User.objects.get(id=pk)
-        user_assignment_qs = user.userassignment_set.all()
-        serializer = UserAssignmentSerializer(user_assignment_qs, many=True)
-        return Response(serializer.data)
+        student_profile_qs = user.studentprofile_set.all()
+        serializer = StudentProfileSerializer(student_profile_qs, many=True)
+        return Response(serializer.data)  
 
     @action(detail='False')
-    def classroom_list(self, request, pk):
+    def missed_words_list(self, request, pk):
         user = User.objects.get(id=pk)
-        user_classroom_qs = user.classroom_set.all()
-        serializer = ClassroomSerializer(user_classroom_qs, many=True)
+        student_profile_qs = user.studentprofile_set.all()
+        missed_word_qs = []
+        for student_profile in student_profile_qs:
+            userassignment_qs = student_profile.userassignment_set.all()
+            for userassignment in userassignment_qs:
+                missed_word_qs += userassignment.missedword_set.all()
+                
+        serializer = MissedWordSerializer(missed_word_qs, many=True)
         return Response(serializer.data)
 
 
@@ -62,6 +68,29 @@ class ClassroomViewSet(viewsets.ModelViewSet):
         serializer = AssignmentSerializer(assignment_qs, many=True)
         return Response(serializer.data)
 
+    @action(detail='False')
+    def student_profile_list(self, request, pk):
+        classroom = Classroom.objects.get(id=pk)
+        student_profile_qs = classroom.studentprofile_set.all()
+        serializer = StudentProfileSerializer(student_profile_qs, many=True)
+        return Response(serializer.data)   
+
+    @action(detail='False')
+    def missed_words_list(self, request, pk):
+        classroom = Classroom.objects.get(id=pk)
+        # first get all Assignments
+        assignment_qs = classroom.assignment_set.all()
+        missedword_qs = []
+        # next get all UserAssignments
+        for assignment in assignment_qs:
+            userassignment_qs = assignment.userassignment_set.all()
+            # now for all userassignments get the missed words
+            for userassignment in userassignment_qs:
+                missedword_qs += userassignment.missedword_set.all()
+
+        serializer = MissedWordSerializer(missedword_qs, many=True)
+        return Response(serializer.data)
+
 
 class AssignmentViewSet(viewsets.ModelViewSet):
     queryset = Assignment.objects.all()
@@ -74,6 +103,18 @@ class AssignmentViewSet(viewsets.ModelViewSet):
         serializer = UserAssignmentSerializer(user_assignment_qs, many=True)
         return Response(serializer.data)
 
+    @action(detail='False')
+    def missed_words_list(self, request, pk):
+        assignment = Assignment.objects.get(id=pk)
+        userassignment_qs = assignment.userassignment_set.all()
+        missedword_qs = []
+        # now for all userassignments get the missed words
+        for userassignment in userassignment_qs:
+            missedword_qs += userassignment.missedword_set.all()
+
+        serializer = MissedWordSerializer(missedword_qs, many=True)
+        return Response(serializer.data)
+
 
 class UserAssignmentViewSet(viewsets.ModelViewSet):
     queryset = UserAssignment.objects.all()
@@ -81,12 +122,24 @@ class UserAssignmentViewSet(viewsets.ModelViewSet):
 
     @action(detail='False')
     def missed_word_list(self, request, pk):
-        assignment = Assignment.objects.get(id=pk)
-        user_assignment_qs = assignment.userassignment_set.all()
-        serializer = UserAssignmentSerializer(user_assignment_qs, many=True)
+        user_assignment = UserAssignment.objects.get(id=pk)
+        missed_word_qs = user_assignment.missedword_set.all()
+        serializer = MissedWordSerializer(missed_word_qs, many=True)
         return Response(serializer.data)
 
 
 class MissedWordViewSet(viewsets.ModelViewSet):
     queryset = MissedWord.objects.all()
     serializer_class = MissedWordSerializer
+
+
+class StudentProfileViewSet(viewsets.ModelViewSet):
+    queryset = StudentProfile.objects.all()
+    serializer_class = StudentProfileSerializer
+
+    @action(detail='False')
+    def user_assignment_list(self, request, pk):
+        student_profile = StudentProfile.objects.get(id=pk)
+        user_assignment_qs = student_profile.userassignment_set.all()
+        serializer = UserAssignmentSerializer(user_assignment_qs, many=True)
+        return Response(serializer.data)

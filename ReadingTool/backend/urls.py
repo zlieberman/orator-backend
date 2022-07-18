@@ -1,5 +1,5 @@
 from django.urls import include, path
-from .views import AssignmentViewSet, BookViewSet, ClassroomViewSet, MissedWordViewSet, UserAssignmentViewSet, UserViewSet
+from .views import AssignmentViewSet, BookViewSet, ClassroomViewSet, MissedWordViewSet, StudentProfileViewSet, UserAssignmentViewSet, UserViewSet
 from rest_framework.routers import DefaultRouter
 
 
@@ -10,6 +10,7 @@ router.register('users', UserViewSet)
 router.register('assignments', AssignmentViewSet)
 router.register('userassignments', UserAssignmentViewSet)
 router.register('missed_words', MissedWordViewSet)
+router.register('students', StudentProfileViewSet)
 
 urlpatterns = [
     path('api/', include(router.urls))

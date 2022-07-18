@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, Classroom, Assignment, MissedWord, UserAssignment
+from .models import Book, Classroom, Assignment, MissedWord, StudentProfile, UserAssignment
 
 # Register your models here.
 
@@ -23,11 +23,17 @@ class AssignmentModel(admin.ModelAdmin):
 
 @admin.register(UserAssignment)
 class UserAssignmentModel(admin.ModelAdmin):
-    list_filter = ('user_id', 'assignment_id', 'grade')
-    list_display = ('user_id', 'assignment_id', 'grade')
+    list_filter = ('student_profile_id', 'assignment_id', 'grade')
+    list_display = ('student_profile_id', 'assignment_id', 'grade')
 
 
 @admin.register(MissedWord)
 class MissedWordModel(admin.ModelAdmin):
     list_filter = ('word', 'word_index', 'user_assignment_id')
     list_display = ('word', 'word_index', 'user_assignment_id')
+
+
+@admin.register(StudentProfile)
+class StudentProfileModel(admin.ModelAdmin):
+    list_filter = ('user_id', 'classroom_id', 'reading_level')
+    list_display = ('user_id', 'classroom_id', 'reading_level')
