@@ -26,7 +26,7 @@ yarn-error.log*
 /crt_venv*
 
 # client
-*/frontend*
+frontend*
 
 Skip to content
 Search or jump to…
@@ -210,4 +210,4 @@ dmypy.json
 cython_debug/
 
 # CKEditor for now
-ckeditor5/*
+ckeditor5*
