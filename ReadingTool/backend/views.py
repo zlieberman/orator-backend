@@ -7,6 +7,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from django.http import HttpResponse, HttpResponseNotFound
+from django.views import View
+import os
 
 
 class BookViewSet(viewsets.ModelViewSet):
@@ -155,3 +158,17 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
         user_assignment_qs = student_profile.userassignment_set.all()
         serializer = UserAssignmentSerializer(user_assignment_qs, many=True)
         return Response(serializer.data)
+
+
+# Add this CBV
+# https://dev.to/mdrhmn/deploying-react-django-app-using-heroku-2gfa
+class Assets(View):
+
+    def get(self, _request, filename):
+        path = os.path.join(os.path.dirname(__file__), 'static', filename)
+
+        if os.path.isfile(path):
+            with open(path, 'rb') as file:
+                return HttpResponse(file.read(), content_type='application/javascript')
+        else:
+            return HttpResponseNotFound()
