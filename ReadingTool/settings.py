@@ -64,7 +64,8 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'https://main--starlit-profiterole-1ef535.netlify.app'
+    'https://main--starlit-profiterole-1ef535.netlify.app',
+    'https://starlit-profiterole-1ef535.netlify.app/'
 ]
 
 ROOT_URLCONF = 'ReadingTool.urls'
