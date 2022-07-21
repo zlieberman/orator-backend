@@ -26,7 +26,11 @@ SECRET_KEY = 'django-insecure-c8_y5jxmpgw7+!6ty4blesnfud&nuc@*s$@163k)1!06oza!-g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://orator-server.herokuapp.com/'] # Set to open for all access
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = [
+#    'https://orator-server.herokuapp.com/', 
+#    'http://127.0.0.1:8000/'
+#] 
 
 
 # Application definition
