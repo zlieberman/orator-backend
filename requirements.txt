@@ -2,6 +2,7 @@ django
 django-cors-headers
 django-webpack-loader
 djangorestframework
+dj-database-url
 gunicorn
 psycopg2
 pygments
