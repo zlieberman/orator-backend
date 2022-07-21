@@ -2,5 +2,6 @@ django
 django-cors-headers
 django-webpack-loader
 djangorestframework
+gunicorn
 pygments
 whitenoise
