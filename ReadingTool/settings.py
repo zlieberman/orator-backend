@@ -29,8 +29,9 @@ DEBUG = True
 
 #ALLOWED_HOSTS = ['*']
 ALLOWED_HOSTS = [
-    'https://orator-server.herokuapp.com/', 
-    'http://127.0.0.1:8000/'
+    '0.0.0.0',
+    'orator-server.herokuapp.com', 
+    '127.0.0.1'
 ] 
 
 
