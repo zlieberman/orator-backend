@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-c8_y5jxmpgw7+!6ty4blesnfud&nuc@*s$@163k)1!06oza!-g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] # Set to open for all access
+ALLOWED_HOSTS = ['https://orator-server.herokuapp.com/'] # Set to open for all access
 
 
 # Application definition
@@ -58,6 +58,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://main--starlit-profiterole-1ef535.netlify.app/'
 ]
 
 ROOT_URLCONF = 'ReadingTool.urls'
