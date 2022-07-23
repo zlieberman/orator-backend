@@ -152,6 +152,30 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
     queryset = StudentProfile.objects.all()
     serializer_class = StudentProfileSerializer
 
+    def create(self, request, *args, **kwargs):
+        # create the StudentProfile
+        student_profile = super().create(request, *args, **kwargs).data
+        # create UserAssignments for each assignment in the classroom
+        active_classroom = Classroom.objects.get(id=student_profile['classroom_id'])
+        assignment_qs = active_classroom.assignment_set.all()
+        user_assignments = []
+        student_profile_object = StudentProfile.objects.get(id=student_profile['id'])
+        for assignment in assignment_qs:
+            user_assignments.append(
+                UserAssignment.objects.create(
+                    student_profile_id = student_profile_object,
+                    assignment_id = assignment,
+                )
+            )
+        user_assignment_responses = UserAssignmentSerializer(user_assignments, many=True)
+        return Response(
+            {
+                'student_profile': student_profile,
+                'user_assignments': user_assignment_responses.data
+            }
+        )
+        
+
     @action(detail='False')
     def user_assignment_list(self, request, pk):
         student_profile = StudentProfile.objects.get(id=pk)

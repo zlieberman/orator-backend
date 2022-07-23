@@ -31,7 +31,8 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '0.0.0.0',
     'orator-server.herokuapp.com', 
-    '127.0.0.1'
+    '127.0.0.1',
+    'localhost'
 ] 
 
 
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    #'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
     'backend',
     'rest_framework',
     'rest_framework.authtoken',
@@ -144,7 +145,7 @@ USE_TZ = True
 #PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 #STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-#STATIC_URL = 'static/'
+STATIC_URL = 'static/'
 
 #STATICFILES_DIRS = (
 #    ('assets', STATIC_ROOT),
