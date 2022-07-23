@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.http import HttpResponse, HttpResponseNotFound
 from django.views import View
+from datetime import datetime
 import os
 
 
@@ -161,12 +162,17 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
         user_assignments = []
         student_profile_object = StudentProfile.objects.get(id=student_profile['id'])
         for assignment in assignment_qs:
-            user_assignments.append(
-                UserAssignment.objects.create(
-                    student_profile_id = student_profile_object,
-                    assignment_id = assignment,
+            if (
+                assignment.min_reading_level <= student_profile_object.reading_level
+                and assignment.max_reading_level >= student_profile_object
+                and assignment.due_date < datetime.now()
+            ):
+                user_assignments.append(
+                    UserAssignment.objects.create(
+                        student_profile_id = student_profile_object,
+                        assignment_id = assignment,
+                    )
                 )
-            )
         user_assignment_responses = UserAssignmentSerializer(user_assignments, many=True)
         return Response(
             {
