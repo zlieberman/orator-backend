@@ -164,7 +164,7 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
         for assignment in assignment_qs:
             if (
                 assignment.min_reading_level <= student_profile_object.reading_level
-                and assignment.max_reading_level >= student_profile_object
+                and assignment.max_reading_level >= student_profile_object.reading_level
                 and assignment.due_date < datetime.now()
             ):
                 user_assignments.append(
