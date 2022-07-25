@@ -189,6 +189,20 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
         serializer = UserAssignmentSerializer(user_assignment_qs, many=True)
         return Response(serializer.data)
 
+    @action(detail='False')
+    def missed_word_list(self, request, pk):
+        student_profile = StudentProfile.objects.get(id=pk)
+        
+        # get user assignments
+        user_assignment_qs = student_profile.userassignment_set.all()
+        missed_word_qs = []
+
+        for user_assignment in user_assignment_qs:
+            missed_word_qs += user_assignment.missedword_set.all()
+
+        serializer = MissedWordSerializer(missed_word_qs, many=True)
+        return Response(serializer.data)
+
 
 # Add this CBV
 # https://dev.to/mdrhmn/deploying-react-django-app-using-heroku-2gfa
