@@ -39,6 +39,17 @@ class Assignment(models.Model):
     min_reading_level = models.PositiveSmallIntegerField(default=0)
     max_reading_level = models.PositiveSmallIntegerField(default=0)
 
+    class CorrectnessLevel(models.TextChoices):
+        NONE = 'NONE', _('None')
+        CLOSE = 'CLOSE', _('Close')
+        EXACT = 'EXACT', _('Exact')
+        
+    correctness_level = models.CharField(
+        max_length=5,
+        choices=CorrectnessLevel.choices,
+        default=CorrectnessLevel.EXACT,
+    )
+
 
 class UserAssignment(models.Model):
     student_profile_id = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
