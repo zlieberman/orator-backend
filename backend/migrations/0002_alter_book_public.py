@@ -15,4 +15,9 @@ class Migration(migrations.Migration):
             name='public',
             field=models.BooleanField(default=False, null=True),
         ),
+         migrations.AlterField(
+            model_name='Assignment',
+            name='correctness_level',
+            fields=models.CharField(choices=[('NONE', 'None'), ('CLOSE', 'Close'), ('EXACT', 'Exact')], default='EXACT', max_length=5),
+        ),
     ]
