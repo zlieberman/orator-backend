@@ -25,6 +25,7 @@ class Book(models.Model):
     description = models.TextField()
     rich_text = models.TextField()
     classroom_id = models.ForeignKey(Classroom, on_delete=models.SET_NULL, null=True)
+    public = models.BooleanField(null=True, default=False)
 
     def __str__(self):
         return self.title

@@ -21,6 +21,10 @@ class BookViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'description']
     filter_backends = (filters.SearchFilter,)
 
+    def get(self, *args, **kwargs):
+        books = super().get(*args, **kwargs)
+        print(books)
+        return books
 
 
 class UserViewSet(viewsets.ModelViewSet):
