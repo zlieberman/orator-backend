@@ -18,6 +18,6 @@ class Migration(migrations.Migration):
          migrations.AlterField(
             model_name='Assignment',
             name='correctness_level',
-            fields=models.CharField(choices=[('NONE', 'None'), ('CLOSE', 'Close'), ('EXACT', 'Exact')], default='EXACT', max_length=5),
+            fields=models.CharField(choices=[('NONE', 'None'), ('CLOSE', 'Close'), ('EXACT', 'Exact')], default='EXACT', max_length=5, null=True),
         ),
     ]
