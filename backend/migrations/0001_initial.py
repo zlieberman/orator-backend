@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
                 ('due_date', models.DateTimeField()),
                 ('min_reading_level', models.PositiveSmallIntegerField(default=0)),
                 ('max_reading_level', models.PositiveSmallIntegerField(default=0)),
+                ('correctness_level', models.CharField(choices=[('NONE', 'None'), ('CLOSE', 'Close'), ('EXACT', 'Exact')], default='EXACT', max_length=5)),
             ],
         ),
         migrations.CreateModel(
