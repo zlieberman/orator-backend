@@ -16,15 +16,15 @@ import os
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    #authentication_classes = (TokenAuthentication,)
+    #permission_classes = (IsAuthenticated,)
     search_fields = ['title', 'description']
     filter_backends = (filters.SearchFilter,)
 
-    def get(self, *args, **kwargs):
-        books = super().get(*args, **kwargs)
-        print(books)
-        return books
+    # only list the public books
+    def list(self, request):
+        serializer = BookSerializer(self.queryset.filter(public=True), many=True)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ModelViewSet):
