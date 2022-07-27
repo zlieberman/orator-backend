@@ -10,7 +10,10 @@ from rest_framework.decorators import action
 from django.http import HttpResponse, HttpResponseNotFound
 from django.views import View
 from datetime import datetime
+import pytz
 import os
+
+utc = pytz.UTC
 
 
 class BookViewSet(viewsets.ModelViewSet):
@@ -18,7 +21,7 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     #authentication_classes = (TokenAuthentication,)
     #permission_classes = (IsAuthenticated,)
-    search_fields = ['title', 'description']
+    search_fields = ['title']
     filter_backends = (filters.SearchFilter,)
 
     # only list the public books
@@ -169,7 +172,7 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
             if (
                 assignment.min_reading_level <= student_profile_object.reading_level
                 and assignment.max_reading_level >= student_profile_object.reading_level
-                and assignment.due_date < datetime.now()
+                and assignment.due_date < utc.localize(datetime.now())
             ):
                 user_assignments.append(
                     UserAssignment.objects.create(
